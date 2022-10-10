@@ -23,9 +23,26 @@ class WalletController extends Controller
             return response()->json([
                 'error'=> $e->getMessage()
             ],404);
-        }
+        }       
+    }
 
-        
+    function validateCash($id, Request $request){     
+        try{
+            $send_wallet = Wallet::find($id);
+
+            // dd($send_wallet);
+
+            if($send_wallet == null || $send_wallet->current_amount<=$request->outbound_amount){
+                return response()->json([
+                    'error'=>'Saldo Insuficiente'
+                ],404);
+            }
+            return true;
+        }catch(Exception $e){
+            return response()->json([
+                'error'=> $e->getMessage()
+            ],404);
+        }
     }
 
 
@@ -50,7 +67,6 @@ class WalletController extends Controller
             ], 404);
         }
     }
-
 
     function show($id_user){
         
