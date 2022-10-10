@@ -50,4 +50,9 @@ class WalletController extends Controller
             ], 404);
         }
     }
+
+
+    function show($id_user){
+        
+    }
 }
