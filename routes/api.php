@@ -25,8 +25,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //Route Users
 Route::get('/User/index',[UserController::class, 'index']);
 Route::post('/User/create',[UserController::class, 'create']);
+Route::post('/User/authentication',[UserController::class, 'authentication']);
 
 //Route Wallet
 
 Route::get('/Wallet/index',[WalletController::class, 'index']);
-Route::post('/Wallet/create',[WalletController::class, 'create']);
+Route::post('/Wallet/create',[WalletController::class, 'create']); 

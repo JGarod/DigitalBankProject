@@ -20,6 +20,6 @@ class User extends Model
 
    public function wallet()
    {
-        return $this->hasOne(Wallet::class);
+        return $this->hasOne(Wallet::class, 'id_user');
     }
 }
