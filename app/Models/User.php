@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 class User extends Model
 {
     use HasFactory, softDeletes;
@@ -19,6 +20,6 @@ class User extends Model
 
    public function wallet()
    {
-        return $this->hasOne(Wallet::class);
+        return $this->hasOne(Wallet::class, 'id_user');
     }
 }
