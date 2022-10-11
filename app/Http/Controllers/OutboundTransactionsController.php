@@ -42,7 +42,21 @@ class OutboundTransactionsController extends Controller
                 ], 404
                 );
             }
-            return response()->json($prueba, 200);
+
+            $outbound = Outbound_Transactions::create([
+                'receive_wallet_id'=>$cartera1->id_user,
+                'send_wallet_id'=>$cartera2->id_user,
+                'outbound_amount'=>$descuento
+
+
+            ]);
+        
+            return response()->json([
+                $outbound
+            ]);
+
+
+            // return response()->json($prueba, 200);
        } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 400);
        }
