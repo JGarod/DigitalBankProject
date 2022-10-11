@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Wallet;
+use App\Models\User;
 
 class WalletController extends Controller
 {
@@ -68,7 +69,24 @@ class WalletController extends Controller
         }
     }
 
-    function show($id_user){
+
+    function show($id){
+        try{
+            $wallet = Wallet::find($id);
+
+            if(!$wallet){
+              
+                return 'No existe la cartera';
+            }else{
+                $wallet = Wallet::with(['user'])->find($id);
+                return response()->json($wallet,200);
+            };
+        }catch(\Exception $e){
+            return response()->json([
+                'error'=> $e -> getMessage()
+            ], 404);
+        }
         
     }
+
 }
