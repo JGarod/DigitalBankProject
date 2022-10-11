@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\InboundTransactionsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WalletController;
 use App\Http\Controllers\OutboundTransactionsController;
@@ -20,6 +21,8 @@ use App\Http\Controllers\OutboundTransactionsController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/InboundTransactions/inbound', [InboundTransactionsController::class, 'inbound']);
 //Route Users
 Route::get('/User/index',[UserController::class, 'index']);
 Route::post('/User/create',[UserController::class, 'create']);
