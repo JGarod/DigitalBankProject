@@ -30,4 +30,6 @@ Route::post('/User/authentication',[UserController::class, 'authentication']);
 //Route Wallet
 
 Route::get('/Wallet/index',[WalletController::class, 'index']);
-Route::post('/Wallet/create',[WalletController::class, 'create']); 
+Route::post('/Wallet/create',[WalletController::class, 'create']);
+Route::get('/Wallet/show/{id}',[WalletController::class, 'show']);
+

@@ -22,4 +22,5 @@ class User extends Model
    {
         return $this->hasOne(Wallet::class, 'id_user');
     }
+    
 }
