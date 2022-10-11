@@ -45,6 +45,7 @@ class UserController extends Controller
                 'NIT'=> $request -> NIT,
                 'email'=> $request -> email,
                 'password'=> $request -> password,
+                
                 'name'=> $request -> name ,
                 'phone'=> $request -> phone
 
