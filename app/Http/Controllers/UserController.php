@@ -29,7 +29,6 @@ class UserController extends Controller
 
     }
 
-
     function create(Request $request){
         try{
             $request->validate([
