@@ -19,7 +19,6 @@ class WalletController extends Controller
             }else{
                 return response()->json($wallet);
             }
-
         }catch(\Exception $e){
             return response()->json([
                 'error'=> $e->getMessage()
@@ -39,7 +38,7 @@ class WalletController extends Controller
                 ],404);
             }
             return true;
-        }catch(Exception $e){
+        }catch(\Exception $e){
             return response()->json([
                 'error'=> $e->getMessage()
             ],404);

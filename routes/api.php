@@ -2,11 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Models\User;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WalletController;
-
-
+use App\Http\Controllers\OutboundTransactionsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,3 +31,9 @@ Route::get('/Wallet/index',[WalletController::class, 'index']);
 Route::post('/Wallet/create',[WalletController::class, 'create']);
 Route::get('/Wallet/show/{id}',[WalletController::class, 'show']);
 
+//Route Outbound 
+Route::put('/Outbound_Transactions/updateSend',
+[OutboundTransactionsController::class, 'updateSend']);
+
+// Route::put('/Outbound_Transactions/updateR/{send_wallet_id}',
+// [OutboundTransactionsController::class, 'update']);
