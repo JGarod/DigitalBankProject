@@ -52,7 +52,6 @@ class WalletController extends Controller
         }
     }
 
-
     function show($id){
         try{
             $wallet = Wallet::find($id);
@@ -72,4 +71,5 @@ class WalletController extends Controller
 
         
     }
+
 }
