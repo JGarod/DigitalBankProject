@@ -13,23 +13,37 @@ class OutboundTransactionsController extends Controller
     public function updateSend(Request $request)
     {
         try {
+           if ($request->receive_wallet_id==$request->send_wallet_id) {
+            return response()->json([
+                'error'=>'No se puede enviar a su misma cartera'
+            ],404);
+           }else{
             $wallet1=$request->validate([
                 'receive_wallet_id'=>'required|integer',
                 'send_wallet_id'=>'required|integer',
                 'outbound_amount'=>'required|numeric'
             ]);
-            $descuento = $wallet1['outbound_amount'];
+            $amountTransaction = $wallet1['outbound_amount'];
             $cartera1 = Wallet::find($wallet1['receive_wallet_id']);//Este valor pertenece a la persona que recibe el dinero
-            $cartera2 = Wallet::find($wallet1['send_wallet_id']);//Este valor pertenece a la persona que envia el dinero. Los tqm naifer <3 
+            $cartera2 = Wallet::find($wallet1['send_wallet_id']);//Este valor pertenece a la persona que envia el dinero. Los tqm naifer <3
+            $amountOfBalanceSent = $cartera2['current_amount'];
+
+            if($amountOfBalanceSent == null || $amountTransaction > $amountOfBalanceSent){
+                return response()->json([
+                    'error'=>'Saldo Insuficiente',
+                    'carterasent'=>$amountOfBalanceSent,
+                    'envias'=>$wallet1['outbound_amount']
+                ],404);
+            }else{
             //Operaciones de la cartera1 que recibe.
             $valorCartera1 = $cartera1 -> current_amount;
-            $aumentoCartera1 = $valorCartera1 + $descuento;
+            $aumentoCartera1 = $valorCartera1 + $amountTransaction;
             //$updateWallet1 = Wallet::findOrFail($wallet1['receive_wallet_id']);
             $cartera1 -> current_amount = $aumentoCartera1;
             $cartera1 -> save();
             //Operaciones de la cartera2 que envia.
             $valorCartera2 = $cartera2 -> current_amount;
-            $aumentoCartera2 = $valorCartera2 - $descuento;
+            $aumentoCartera2 = $valorCartera2 - $amountTransaction;
             //$updateWallet2 = Wallet::findOrFail($wallet1['receive_wallet_id']);
             $cartera2 -> current_amount = $aumentoCartera2;
             $cartera2 -> save();
@@ -44,17 +58,19 @@ class OutboundTransactionsController extends Controller
             }
 
             $outbound = Outbound_Transactions::create([
-                'receive_wallet_id'=>$cartera1->id_user,
-                'send_wallet_id'=>$cartera2->id_user,
-                'outbound_amount'=>$descuento
+                'receive_wallet_id'=>$cartera1->id,
+                'send_wallet_id'=>$cartera2->id,
+                'outbound_amount'=>$amountTransaction
 
 
             ]);
         
             return response()->json([
-                $outbound
+                "Transaction successfully Number:".$outbound,
             ]);
 
+            }
+           }
 
             // return response()->json($prueba, 200);
        } catch (\Exception $e) {

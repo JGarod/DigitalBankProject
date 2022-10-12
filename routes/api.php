@@ -22,21 +22,32 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/InboundTransactions/inbound', [InboundTransactionsController::class, 'inbound']);
+
+Route::controller(UserController::class)->group(function () {
+    Route::get('/User/index', 'index');
+    Route::post('/User/create', 'create');
+    Route::post('/User/authentication', 'authentication');
+});
 //Route Users
-Route::get('/User/index',[UserController::class, 'index']);
-Route::post('/User/create',[UserController::class, 'create']);
-Route::post('/User/authentication',[UserController::class, 'authentication']);
+// Route::get('/User/index',[UserController::class, 'index']); //listo
+// Route::post('/User/create',[UserController::class, 'create']); //listo
+// Route::post('/User/authentication',[UserController::class, 'authentication']); //REVISAR DESPUES DE CREAR LA WALLET
 
 //Route Wallet
-
-Route::get('/Wallet/index',[WalletController::class, 'index']);
-Route::post('/Wallet/create',[WalletController::class, 'create']);
-Route::get('/Wallet/show/{id}',[WalletController::class, 'show']);
+Route::controller(WalletController::class)->group(function () {
+    Route::get('/Wallet/index', 'index');
+    Route::post('/Wallet/create', 'create');
+    Route::get('/Wallet/show/{id}', 'show');
+});
+// Route::get('/Wallet/index',[WalletController::class, 'index']); //LISTO
+// Route::post('/Wallet/create',[WalletController::class, 'create']); //LISTO
+// Route::get('/Wallet/show/{id}',[WalletController::class, 'show']); //LISTO
 
 //Route Outbound 
 Route::put('/Outbound_Transactions/updateSend',
-[OutboundTransactionsController::class, 'updateSend']);
+[OutboundTransactionsController::class, 'updateSend']); //LISTO
 
-// Route::put('/Outbound_Transactions/updateR/{send_wallet_id}',
-// [OutboundTransactionsController::class, 'update']);
+
+//INBOUND TRANSACTION UPDATE
+Route::get('/InboundTransactions/inbound', [InboundTransactionsController::class, 'inbound']);
+

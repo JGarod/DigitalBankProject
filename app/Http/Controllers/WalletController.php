@@ -26,24 +26,24 @@ class WalletController extends Controller
         }       
     }
 
-    function validateCash($id, Request $request){     
-        try{
-            $send_wallet = Wallet::find($id);
+    // function validateCash($id, Request $request){     
+    //     try{
+    //         $send_wallet = Wallet::find($id);
 
-            // dd($send_wallet);
+    //         // dd($send_wallet);
 
-            if($send_wallet == null || $send_wallet->current_amount<=$request->outbound_amount){
-                return response()->json([
-                    'error'=>'Saldo Insuficiente'
-                ],404);
-            }
-            return true;
-        }catch(\Exception $e){
-            return response()->json([
-                'error'=> $e->getMessage()
-            ],404);
-        }
-    }
+    //         if($send_wallet == null || $send_wallet->current_amount<=$request->outbound_amount){
+    //             return response()->json([
+    //                 'error'=>'Saldo Insuficiente'
+    //             ],404);
+    //         }
+    //         return true;
+    //     }catch(\Exception $e){
+    //         return response()->json([
+    //             'error'=> $e->getMessage()
+    //         ],404);
+    //     }
+    // }
 
 
     function create(Request $request ){

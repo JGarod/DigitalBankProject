@@ -73,7 +73,25 @@ class UserController extends Controller
         
         if($email){
              if($pass){
-
+                $UserData = User::select('*')
+                ->join('wallets', 'wallets.id_user', '=', 'users.id')
+                ->where('users.email', $request->email)
+                ->get();
+                if($UserData->count() > 0){
+                    $decoderUserData=json_decode($UserData);
+               
+                    // if($decoderUserData[0]->id_user==null){
+                    //     return response()->json([
+                    //         'error' => 'Usuario sin cartera'
+                    //     ]);
+                    // }else{
+                        return $decoderUserData;
+                    // }
+                }else{
+                    return response()->json([
+                        'error' => 'Usuario sin cartera'
+                    ]);
+                }
                 // $user = User::find($email->id);
             
                 // $wallet = Wallet::where('id_user',$user->id)->firts();
@@ -85,19 +103,19 @@ class UserController extends Controller
                 
                 // ->first();
                 
-                $user = User::with('wallet')->first();
-
                 
-                
-                return response()->json([
-                    "message" => "Te has logeado Exitosamente!",
-                    "name" =>$user->name,
-                    "email" =>$user->email,
-                    "NIT" => $user->NIT,
-                    "Wallet Amount" => $user->wallet->current_amount
-                    //$wallet->current_amount
-                    ]);
-
+                // return response()->json([
+                //     "message" => "Te has logeado Exitosamente!",
+                //     "name" =>$walletuser->name,
+                //     "email" =>$walletuser->email,
+                //     "NIT" => $walletuser->NIT,
+                //     "Wallet Amount" => $user->current_amount
+                //     // "Wallet Amount" => $walletuser->wallet->current_amount
+                //     //$wallet->current_amount
+                //     ]);
+                // $walletuser= User::where("email","=",$request->email)->get();
+                // // $user = Wallet::where('id_user','=',5)->get();
+                // return $walletuser['name'];
              }else{
                 return response()->json([
                     
