@@ -77,4 +77,23 @@ class OutboundTransactionsController extends Controller
             return response()->json(['message' => $e->getMessage()], 400);
        }
     }
+
+    function show($id){
+        try{
+            $historial = Outbound_Transactions::where("send_wallet_id","=",$id)->get();
+
+            if(count($historial)==0){             
+                return 'No Tienes transacciones';
+            }else{
+                
+                return $historial;
+            };
+        }catch(\Exception $e){
+            return response()->json([
+                'error'=> $e -> getMessage()
+            ], 404);
+        }
+        
+    }
+   
 }
